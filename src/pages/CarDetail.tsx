@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Phone, Check } from 'lucide-react';
+import { ArrowLeft, Check } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -97,15 +97,14 @@ const CarDetail = () => {
               </div>
 
               {/* CTA */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-gradient-gold text-foreground hover:opacity-90 flex-1">
-                  <a href="tel:+971502362889">
-                    <Phone className="w-5 h-5 mr-2" /> Book Now
-                  </a>
-                </Button>
-                <Button asChild variant="outline" size="lg" className="flex-1">
-                  <a href="https://wa.me/971502362889" target="_blank" rel="noopener noreferrer">
-                    WhatsApp
+              <div className="flex flex-col gap-4">
+                <Button asChild size="lg" className="bg-[#25D366] hover:bg-[#1ebe5a] text-white text-lg py-6 w-full">
+                  <a 
+                    href={`https://wa.me/971552184418?text=${encodeURIComponent(`Hi, I'm interested in renting the ${car.name} (${car.year}, ${car.color}). Please let me know about availability and pricing.`)}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    Book via WhatsApp
                   </a>
                 </Button>
               </div>
