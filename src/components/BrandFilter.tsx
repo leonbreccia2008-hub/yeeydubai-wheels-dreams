@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { brands } from '@/data/cars';
 
 interface BrandFilterProps {
@@ -6,31 +6,43 @@ interface BrandFilterProps {
 }
 
 export const BrandFilter = ({ activeBrand }: BrandFilterProps) => {
+  const navigate = useNavigate();
+
+  const handleBrandClick = (brandId?: string) => {
+    if (brandId) {
+      navigate(`/brand/${brandId}`);
+    } else {
+      navigate('/cars');
+    }
+  };
+
   return (
     <div className="flex flex-wrap justify-center gap-4 py-8">
-      <Link
-        to="/cars"
-        className={`px-6 py-3 rounded-full border-2 font-medium transition-all ${
+      <button
+        type="button"
+        onClick={() => handleBrandClick()}
+        className={`px-6 py-3 rounded-full border-2 font-medium transition-colors cursor-pointer select-none ${
           !activeBrand
             ? 'border-gold bg-gradient-gold text-foreground'
             : 'border-border hover:border-gold hover:text-gold'
         }`}
       >
         All Cars
-      </Link>
+      </button>
       {brands.map((brand) => (
-        <Link
+        <button
+          type="button"
           key={brand.id}
-          to={`/brand/${brand.id}`}
-          className={`px-6 py-3 rounded-full border-2 font-medium transition-all flex items-center gap-2 ${
+          onClick={() => handleBrandClick(brand.id)}
+          className={`px-6 py-3 rounded-full border-2 font-medium transition-colors cursor-pointer select-none flex items-center gap-2 ${
             activeBrand === brand.id
               ? 'border-gold bg-gradient-gold text-foreground'
               : 'border-border hover:border-gold hover:text-gold'
           }`}
         >
-          <img src={brand.logo} alt={brand.name} className="w-5 h-5 object-contain" />
+          <img src={brand.logo} alt={brand.name} className="w-5 h-5 object-contain pointer-events-none" />
           {brand.name}
-        </Link>
+        </button>
       ))}
     </div>
   );
