@@ -4,12 +4,14 @@ import { ArrowLeft, Check } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { getCarById, brands } from '@/data/cars';
+import { ImageGallery } from '@/components/ImageGallery';
+import { getCarById, brands, getHorsepower } from '@/data/cars';
 
 const CarDetail = () => {
   const { id } = useParams();
   const car = getCarById(id || '');
   const brand = brands.find(b => b.id === car?.brand);
+  const horsepower = car ? getHorsepower(car.model) : 0;
 
   if (!car) {
     return (
@@ -33,18 +35,9 @@ const CarDetail = () => {
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Images */}
+            {/* Images with Swipe Gallery */}
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-              <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted mb-4">
-                <img src={car.image} alt={car.name} className="w-full h-full object-cover" />
-              </div>
-              <div className="grid grid-cols-3 gap-4">
-                {car.images.slice(0, 3).map((img, i) => (
-                  <div key={i} className="aspect-[4/3] rounded-lg overflow-hidden bg-muted">
-                    <img src={img} alt={`${car.name} ${i + 1}`} className="w-full h-full object-cover" />
-                  </div>
-                ))}
-              </div>
+              <ImageGallery images={car.images} altText={car.name} />
             </motion.div>
 
             {/* Details */}
@@ -69,6 +62,7 @@ const CarDetail = () => {
               <div className="grid grid-cols-2 gap-4 mb-8">
                 {[
                   { label: 'Model Year', value: car.year },
+                  { label: 'Horsepower', value: `${horsepower} HP` },
                   { label: 'Color', value: car.color },
                   { label: 'Delivery', value: car.specs.delivery },
                   { label: 'Insurance', value: car.specs.insurance },
