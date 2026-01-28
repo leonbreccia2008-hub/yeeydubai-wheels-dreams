@@ -26,29 +26,16 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
         
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <motion.div
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="mb-6"
-          >
-            <h1 className="font-body text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white">
-              BRECCIA RENTALS
-            </h1>
-            <span className="block text-2xl md:text-4xl lg:text-5xl font-body font-medium tracking-widest text-white mt-2">
-              DUBAI
-            </span>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-display text-3xl md:text-5xl lg:text-6xl font-bold mb-4"
+            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
           >
             Luxury Car Rental
             <br />
             <span className="text-gradient-gold">in Dubai</span>
-          </motion.h2>
+          </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
