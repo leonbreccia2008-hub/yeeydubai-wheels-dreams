@@ -17,9 +17,12 @@ export const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl md:text-3xl font-display font-bold tracking-tight">
-              YEEY<span className="text-gradient-gold">DUBAI</span>
+          <Link to="/" className="flex flex-col items-start">
+            <span className="text-xl md:text-2xl font-bold tracking-tight font-body text-foreground">
+              BRECCIA RENTALS
+            </span>
+            <span className="text-xs md:text-sm font-medium tracking-widest font-body text-foreground">
+              DUBAI
             </span>
           </Link>
 

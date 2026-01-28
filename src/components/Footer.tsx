@@ -8,9 +8,14 @@ export const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <h3 className="text-2xl font-display font-bold mb-4">
-              YEEY<span className="text-gold">DUBAI</span>
-            </h3>
+            <div className="mb-4">
+              <h3 className="text-2xl font-bold font-body">
+                BRECCIA RENTALS
+              </h3>
+              <span className="text-sm font-medium tracking-widest font-body text-gold">
+                DUBAI
+              </span>
+            </div>
             <p className="text-muted-foreground mb-6">
               Premium luxury car rental in Dubai, UAE. Experience the finest supercars and luxury vehicles.
             </p>
@@ -70,7 +75,7 @@ export const Footer = () => {
         </div>
 
         <div className="border-t border-muted-foreground/20 mt-12 pt-8 text-center text-muted-foreground">
-          <p>© {new Date().getFullYear()} YEEYDUBAI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} BRECCIA RENTALS DUBAI. All rights reserved.</p>
         </div>
       </div>
     </footer>
