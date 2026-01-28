@@ -1,0 +1,122 @@
+import { useParams, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Phone, Check } from 'lucide-react';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { Button } from '@/components/ui/button';
+import { getCarById, brands } from '@/data/cars';
+
+const CarDetail = () => {
+  const { id } = useParams();
+  const car = getCarById(id || '');
+  const brand = brands.find(b => b.id === car?.brand);
+
+  if (!car) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Car not found</h1>
+          <Link to="/cars" className="text-gold hover:underline">Back to all cars</Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+
+      <main className="pt-24 pb-20">
+        <div className="container mx-auto px-4">
+          <Link to="/cars" className="inline-flex items-center gap-2 text-muted-foreground hover:text-gold mb-8">
+            <ArrowLeft className="w-4 h-4" /> Back to all cars
+          </Link>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Images */}
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+              <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted mb-4">
+                <img src={car.image} alt={car.name} className="w-full h-full object-cover" />
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                {car.images.slice(0, 3).map((img, i) => (
+                  <div key={i} className="aspect-[4/3] rounded-lg overflow-hidden bg-muted">
+                    <img src={img} alt={`${car.name} ${i + 1}`} className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Details */}
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+              {brand && (
+                <div className="flex items-center gap-3 mb-4">
+                  <img src={brand.logo} alt={brand.name} className="w-10 h-10 object-contain" />
+                  <span className="text-muted-foreground font-medium">{brand.name}</span>
+                </div>
+              )}
+
+              <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">{car.name}</h1>
+              
+              <div className="flex items-baseline gap-2 mb-8">
+                <span className="text-4xl font-bold text-gradient-gold">
+                  {car.pricePerDay.toLocaleString()} AED
+                </span>
+                <span className="text-muted-foreground">/ day</span>
+              </div>
+
+              {/* Specs */}
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {[
+                  { label: 'Model Year', value: car.year },
+                  { label: 'Color', value: car.color },
+                  { label: 'Delivery', value: car.specs.delivery },
+                  { label: 'Insurance', value: car.specs.insurance },
+                  { label: 'Daily KMs', value: `${car.specs.kilometers} km` },
+                  { label: 'Deposit', value: car.specs.deposit },
+                  { label: 'Min Age', value: `${car.specs.minAge} years` },
+                ].map((spec) => (
+                  <div key={spec.label} className="bg-secondary rounded-lg p-4">
+                    <p className="text-sm text-muted-foreground">{spec.label}</p>
+                    <p className="font-semibold">{spec.value}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Features */}
+              <div className="mb-8">
+                <h3 className="font-display text-xl font-semibold mb-4">Included</h3>
+                <ul className="space-y-2">
+                  {['Free Delivery', 'Full Insurance', 'No Deposit Required', '24/7 Support'].map((f) => (
+                    <li key={f} className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-gold" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* CTA */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button asChild size="lg" className="bg-gradient-gold text-foreground hover:opacity-90 flex-1">
+                  <a href="tel:+971502362889">
+                    <Phone className="w-5 h-5 mr-2" /> Book Now
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="flex-1">
+                  <a href="https://wa.me/971502362889" target="_blank" rel="noopener noreferrer">
+                    WhatsApp
+                  </a>
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default CarDetail;
