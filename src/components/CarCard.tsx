@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Car } from '@/data/cars';
+import { Car, getHorsepower } from '@/data/cars';
 
 interface CarCardProps {
   car: Car;
@@ -8,6 +8,8 @@ interface CarCardProps {
 }
 
 export const CarCard = ({ car, index = 0 }: CarCardProps) => {
+  const horsepower = getHorsepower(car.model);
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -28,7 +30,7 @@ export const CarCard = ({ car, index = 0 }: CarCardProps) => {
               {car.name}
             </h3>
             <p className="text-sm text-muted-foreground mb-3">
-              {car.year} • {car.color}
+              {car.year} • {car.color} • {horsepower} HP
             </p>
             <div className="flex items-baseline justify-between">
               <div>

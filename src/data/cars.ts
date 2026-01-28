@@ -1,3 +1,96 @@
+// Horsepower lookup by model
+const horsepowerByModel: Record<string, number> = {
+  // Lamborghini
+  'Revuelto': 1015,
+  'Urus SE Hybrid': 800,
+  'Urus Performante': 666,
+  'Huracán STO': 640,
+  'Huracán EVO Spyder': 640,
+  'Huracán EVO': 640,
+  'Urus': 650,
+  'Urus S': 666,
+  'Aventador S': 740,
+  // Ferrari
+  'Roma': 620,
+  'SF90': 1000,
+  'Purosangue': 725,
+  'F8 Tributo Spider': 720,
+  'F8 Tributo': 720,
+  'GTC 4 Lusso T': 610,
+  'Portofino M': 620,
+  // Rolls Royce
+  'Dawn': 563,
+  'Spectre': 585,
+  'Wraith Black Badge': 632,
+  'Ghost Black Badge': 592,
+  'Ghost': 563,
+  'Ghost Long': 563,
+  'Cullinan Mansori': 600,
+  'Cullinan Black Badge': 600,
+  'Cullinan': 563,
+  'Cullinan Limited Edition': 563,
+  'Phantom': 563,
+  // McLaren
+  'Artura': 680,
+  'Artura Spider': 700,
+  'GT': 620,
+  '750S': 750,
+  // Mercedes
+  'G63': 585,
+  'BRABUS G800': 800,
+  'G63 KEYVANY': 700,
+  'CLE 200': 204,
+  'G 4×4': 585,
+  'GLE 63': 603,
+  'AMG GT 63': 639,
+  'AMG GLE 63': 603,
+  'GLE 53': 435,
+  'AMG GT Convertible': 530,
+  'E 53 Convertible': 435,
+  'C43 Convertible': 390,
+  'GLB 250': 221,
+  'S 500': 496,
+  'S Class': 496,
+  'E 350': 302,
+  'C 300': 255,
+  'CLA 200': 163,
+  // Porsche
+  'Cayenne': 340,
+  'Macan': 261,
+  'Panamera': 440,
+  '911': 450,
+  '911 Turbo S': 640,
+  '911 GT3 RS': 518,
+  '911 GTS': 480,
+  'Taycan': 469,
+  // Audi
+  'Q7': 335,
+  'Q5': 261,
+  'Q8': 335,
+  'A8': 335,
+  'A6': 261,
+  'RS Q8': 600,
+  'RS Q3': 400,
+  'S3': 310,
+  'R8': 602,
+  'Q3': 228,
+  // Bentley
+  'Bentayga': 542,
+  'Bentayga First Edition': 550,
+  'Bentayga Speed': 635,
+  'Continental GT': 542,
+  'Continental GT Convertible': 542,
+  'Continental GT Convertible V8': 542,
+  'Continental GTC V8': 542,
+  'Continental GT-GTC Speed': 659,
+  'Flying Spur': 626,
+};
+
+// Helper to get horsepower from model
+export const getHorsepower = (model: string): number => {
+  return horsepowerByModel[model] || 500;
+};
+
 export interface Car {
   id: string;
   name: string;
