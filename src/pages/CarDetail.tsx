@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ImageGallery } from '@/components/ImageGallery';
 import { CarCard } from '@/components/CarCard';
 import { getCarById, brands, getHorsepower, getDescription, cars } from '@/data/cars';
-import { useMemo } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 
 const CarDetail = () => {
   const { id } = useParams();
@@ -22,6 +22,26 @@ const CarDetail = () => {
     const shuffled = [...otherCars].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, 6);
   }, [id]);
+
+  // Scroll progress tracking
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      const maxScroll = scrollWidth - clientWidth;
+      if (maxScroll > 0) {
+        setScrollProgress(scrollLeft / maxScroll);
+      }
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [randomCars]);
   if (!car) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -121,16 +141,32 @@ const CarDetail = () => {
         </div>
 
         {/* Random Cars Section */}
-        <section className="mt-20">
-          <h2 className="font-display text-2xl md:text-3xl font-bold mb-8">
+        <section className="mt-20 -mx-4 px-0">
+          <h2 className="font-display text-2xl md:text-3xl font-bold mb-8 px-4">
             You May Also Like
           </h2>
-          <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+          <div 
+            ref={scrollContainerRef}
+            className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide px-4"
+          >
             {randomCars.map((randomCar, index) => (
               <div key={randomCar.id} className="flex-shrink-0 w-[280px]">
                 <CarCard car={randomCar} index={index} />
               </div>
             ))}
+          </div>
+          
+          {/* Scroll Progress Indicator */}
+          <div className="mt-4 px-4">
+            <div className="h-1 bg-muted rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-foreground rounded-full transition-all duration-150"
+                style={{ 
+                  width: '30%',
+                  transform: `translateX(${scrollProgress * 233}%)`
+                }}
+              />
+            </div>
           </div>
         </section>
       </main>
