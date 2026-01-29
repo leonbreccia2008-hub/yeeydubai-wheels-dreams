@@ -5,13 +5,14 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ImageGallery } from '@/components/ImageGallery';
-import { getCarById, brands, getHorsepower } from '@/data/cars';
+import { getCarById, brands, getHorsepower, getDescription } from '@/data/cars';
 
 const CarDetail = () => {
   const { id } = useParams();
   const car = getCarById(id || '');
   const brand = brands.find(b => b.id === car?.brand);
   const horsepower = car ? getHorsepower(car.model) : 0;
+  const description = car ? getDescription(car.model) : '';
 
   if (!car) {
     return (
@@ -50,6 +51,8 @@ const CarDetail = () => {
               )}
 
               <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">{car.name}</h1>
+              
+              <p className="text-muted-foreground italic text-lg mb-6">{description}</p>
               
               <div className="flex items-baseline gap-2 mb-8">
                 <span className="text-4xl font-bold text-gradient-gold">
