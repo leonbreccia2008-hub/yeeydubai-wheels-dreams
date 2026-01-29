@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu, X, Phone } from 'lucide-react';
 import { brands } from '@/data/cars';
 import { Button } from '@/components/ui/button';
+import { SearchBar } from '@/components/SearchBar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -51,6 +52,7 @@ export const Header = () => {
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
+            <SearchBar />
             <a href="tel:+971502362889" className="flex items-center gap-2 text-gold font-medium">
               <Phone className="w-4 h-4" />
               +971 50 236 2889
@@ -61,13 +63,16 @@ export const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden p-2"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="lg:hidden flex items-center gap-2">
+            <SearchBar />
+            <button
+              className="p-2"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
