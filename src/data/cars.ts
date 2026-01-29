@@ -91,6 +91,99 @@ export const getHorsepower = (model: string): number => {
   return horsepowerByModel[model] || 500;
 };
 
+// Luxury descriptions by model
+const descriptionsByModel: Record<string, string> = {
+  // Lamborghini
+  'Revuelto': 'The ultimate fusion of raw V12 power and electrified performance. A breathtaking hybrid hypercar that rewrites the rules of supercar excellence with 1,015 horsepower.',
+  'Urus SE Hybrid': 'The world\'s first Super Sport Utility Vehicle, now electrified. Combining unprecedented power with sustainable luxury, delivering 800 hybrid horses.',
+  'Urus Performante': 'Born from racing DNA, this track-focused SUV delivers blistering performance with aggressive aerodynamics and the soul of a true Lamborghini.',
+  'Urus': 'The original super SUV that defied all conventions. Italian craftsmanship meets uncompromising performance in this legendary luxury crossover.',
+  'Urus S': 'Elevated performance meets refined elegance. The S variant delivers enhanced driving dynamics while maintaining supreme comfort.',
+  'Huracán STO': 'A road-legal race car. The Super Trofeo Omologata brings competition-bred engineering to the streets with raw, unfiltered performance.',
+  'Huracán EVO Spyder': 'Open-air exhilaration with cutting-edge aerodynamics. Experience the symphony of the V10 engine under the Dubai sky.',
+  'Huracán EVO': 'Next-generation technology wrapped in breathtaking design. Every curve engineered for aerodynamic perfection and pure driving pleasure.',
+  'Aventador S': 'The flagship V12 masterpiece. An icon of automotive design that commands attention with its otherworldly presence and thunderous power.',
+  // Ferrari
+  'Roma': 'La Nuova Dolce Vita. A timeless GT that captures the elegance of 1960s Rome with modern Ferrari performance and sophistication.',
+  'SF90': 'Ferrari\'s most powerful road car ever. A plug-in hybrid hypercar delivering 1,000 horsepower of pure Italian engineering excellence.',
+  'Purosangue': 'Ferrari\'s first four-door, four-seater. A revolutionary V12 crossover that maintains the prancing horse\'s uncompromising performance standards.',
+  'F8 Tributo Spider': 'A tribute to Ferrari\'s legendary twin-turbo V8. Open-top perfection with 720 horsepower of pure adrenaline.',
+  'F8 Tributo': 'The pinnacle of Ferrari\'s twin-turbo V8 evolution. Raw power meets refined luxury in this mid-engine masterpiece.',
+  'GTC 4 Lusso T': 'Ferrari\'s elegant four-seater grand tourer. Perfect blend of everyday usability and breathtaking performance.',
+  'Portofino M': 'The ultimate convertible GT. La dolce vita meets cutting-edge technology in this refined open-top masterpiece.',
+  // Rolls Royce
+  'Dawn': 'The most social of Rolls-Royces. A sumptuous drophead that transforms every journey into an unforgettable experience.',
+  'Spectre': 'The first fully electric Rolls-Royce. Ultra-luxury meets sustainability in this groundbreaking Spirit of Ecstasy.',
+  'Wraith Black Badge': 'The most powerful Rolls-Royce in history. Dark elegance meets otherworldly performance in this bold statement.',
+  'Ghost Black Badge': 'Post Opulence redefined. The darker alter ego of Ghost, for those who demand presence without compromise.',
+  'Ghost': 'Perfect simplicity. A masterpiece of minimalist luxury that whispers sophistication through effortless refinement.',
+  'Ghost Long': 'Extended wheelbase for ultimate rear passenger comfort. The pinnacle of chauffeured luxury and serene isolation.',
+  'Cullinan Mansori': 'Bespoke exclusivity taken to new heights. A customized masterpiece for those who demand the extraordinary.',
+  'Cullinan Black Badge': 'The definitive ultra-luxury SUV in its most assertive form. Uncompromising presence meets limitless capability.',
+  'Cullinan': 'Effortless everywhere. The first ultra-luxury SUV, offering Rolls-Royce serenity across any terrain imaginable.',
+  'Cullinan Limited Edition': 'Rare by design. A collector\'s piece that represents the ultimate expression of personalized luxury.',
+  'Phantom': 'The pinnacle of luxury. The best car in the world, crafted for those who shape the world around them.',
+  // McLaren
+  'Artura': 'McLaren\'s new hybrid supercar era. Lightweight, electrified, and devastatingly quick with 680 combined horsepower.',
+  'Artura Spider': 'Open-top hybrid supercar excellence. Experience the future of performance under the Arabian sun.',
+  'GT': 'The grand tourer redefined. Everyday usability meets McLaren\'s legendary driving dynamics and innovation.',
+  '750S': 'The next generation supercar. Lighter, more powerful, and more engaging than anything McLaren has created before.',
+  // Mercedes
+  'G63': 'The ultimate status symbol. German engineering meets uncompromising luxury in this legendary SUV icon.',
+  'BRABUS G800': 'Power without limits. Brabus transforms the G-Class into an 800-horsepower statement of absolute dominance.',
+  'G63 KEYVANY': 'Exclusive Keyvany customization elevates the G63 to automotive art. A masterpiece of bespoke luxury.',
+  'CLE 200': 'Elegant open-top cruising. Modern Mercedes luxury combined with refined convertible pleasure.',
+  'G 4×4': 'Squared off-road capability meets urban luxury. The most capable G-Class ever created.',
+  'GLE 63': 'AMG performance in an elegant SUV package. Powerful, luxurious, and unmistakably Mercedes.',
+  'AMG GT 63': 'Four-door supercar excellence. The AMG GT\'s soul in a practical grand touring package.',
+  'AMG GLE 63': 'The performance SUV that defies physics. Blistering acceleration with family-friendly versatility.',
+  'GLE 53': 'The perfect balance of performance and luxury. AMG power wrapped in sophisticated elegance.',
+  'AMG GT Convertible': 'Open-air AMG excellence. The roar of twin-turbo V8 under the endless Dubai sky.',
+  'E 53 Convertible': 'Executive elegance meets open-top pleasure. Refined performance for the discerning driver.',
+  'C43 Convertible': 'Accessible AMG performance in a beautiful convertible package. Pure driving enjoyment.',
+  'GLB 250': 'Compact luxury with surprising versatility. Seven seats of Mercedes refinement in a stylish package.',
+  'S 500': 'The benchmark of automotive luxury. Where innovation and comfort reach their absolute pinnacle.',
+  'S Class': 'The best or nothing. S-Class represents the culmination of Mercedes-Benz engineering excellence.',
+  'E 350': 'Executive refinement meets modern technology. The E-Class remains the heart of Mercedes luxury.',
+  'C 300': 'Entry to the Mercedes world of luxury. Sophisticated design with accessible excellence.',
+  'CLA 200': 'Sleek four-door coupe styling meets Mercedes refinement. Style-conscious luxury redefined.',
+  // Porsche
+  'Cayenne': 'The original sports car SUV. Porsche DNA in a versatile package that conquers all roads.',
+  'Macan': 'Compact SUV with pure sports car soul. Every drive becomes an event in this agile performer.',
+  'Panamera': 'The sports car among luxury sedans. Four doors, pure Porsche performance, zero compromise.',
+  '911': 'The legend continues. Six decades of evolution have created the ultimate sports car icon.',
+  '911 Turbo S': 'The supercar-slaying 911. Devastating performance combined with everyday usability and refinement.',
+  '911 GT3 RS': 'A race car for the road. Track-bred performance with no compromise for street legality.',
+  '911 GTS': 'The purist\'s 911. Enhanced performance with driving purity that Porsche is famous for.',
+  'Taycan': 'Electric Porsche excitement. The future of performance has arrived with instant, silent power.',
+  // Audi
+  'Q7': 'Refined luxury SUV excellence. Quattro capability meets sophisticated German engineering.',
+  'Q5': 'The perfect balance of size and capability. Audi\'s most versatile SUV for discerning drivers.',
+  'Q8': 'Flagship SUV with coupe-like elegance. Bold design meets uncompromising Audi luxury.',
+  'A8': 'Audi\'s pinnacle of luxury. Cutting-edge technology wrapped in executive refinement.',
+  'A6': 'Business-class refinement for the modern executive. Sophisticated luxury in every detail.',
+  'RS Q8': 'The wolf in premium clothing. SUV practicality meets Audi Sport\'s relentless performance.',
+  'RS Q3': 'Compact RS power. Five-cylinder fury in an agile, premium package.',
+  'S3': 'Everyday performance sedan. Quattro grip and turbocharged power in a refined package.',
+  'R8': 'Audi\'s mid-engine supercar icon. V10 naturally aspirated perfection with everyday refinement.',
+  'Q3': 'Premium compact SUV excellence. Audi quality in an accessible, versatile package.',
+  // Bentley
+  'Bentayga': 'The ultimate luxury SUV. Handcrafted British excellence meets boundless capability.',
+  'Bentayga First Edition': 'Exclusive specification for the most discerning. Rare luxury with bespoke touches.',
+  'Bentayga Speed': 'The world\'s fastest luxury SUV. Bentley performance taken to extraordinary heights.',
+  'Continental GT': 'The definitive grand tourer. British luxury meets continent-crushing performance.',
+  'Continental GT Convertible': 'Open-air grand touring perfection. The finest way to experience the world.',
+  'Continental GT Convertible V8': 'The V8 symphony in open-air form. Perfect balance of power and refinement.',
+  'Continental GTC V8': 'V8 convertible excellence. The soundtrack of luxury under the Arabian stars.',
+  'Continental GT-GTC Speed': 'The most dynamic Bentley ever. W12 power meets track-honed precision.',
+  'Flying Spur': 'Four-door luxury at its finest. A limousine with the soul of a grand tourer.',
+};
+
+// Helper to get description from model
+export const getDescription = (model: string): string => {
+  return descriptionsByModel[model] || 'Experience unparalleled luxury and performance in this exceptional vehicle.';
+};
+
 export interface Car {
   id: string;
   name: string;

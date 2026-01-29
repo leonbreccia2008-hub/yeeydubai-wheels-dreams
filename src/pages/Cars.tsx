@@ -16,7 +16,7 @@ const Cars = () => {
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-4">
           <h1 className="font-display text-4xl md:text-5xl font-bold text-center mb-4">
-            {brand ? brand.name : 'All'} <span className="text-gradient-gold"></span>
+            {brand ? brand.name : 'All Cars'}
           </h1>
           <p className="text-muted-foreground text-center mb-8">
             {displayCars.length} vehicles available for rent
