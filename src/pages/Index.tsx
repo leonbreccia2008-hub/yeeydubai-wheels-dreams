@@ -59,7 +59,7 @@ const Index = () => {
               <Link to="/cars">View All Cars</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-white bg-white text-foreground hover:bg-white/90 text-lg px-8">
-              <a href="tel:+971502362889">Call Now</a>
+              
             </Button>
           </motion.div>
         </div>
