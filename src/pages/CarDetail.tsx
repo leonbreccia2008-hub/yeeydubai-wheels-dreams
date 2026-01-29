@@ -137,34 +137,36 @@ const CarDetail = () => {
 
         {/* Random Cars Section */}
         <section className="mt-20 -mx-4 px-0">
-          <div className="flex items-center justify-between mb-8 px-4">
-            <h2 className="font-display text-2xl md:text-3xl font-bold">
-              You May Also Like
-            </h2>
-            <div className="flex gap-3">
-              <button 
-                onClick={scrollLeft}
-                className="w-10 h-10 rounded-full bg-gold/20 hover:bg-gold/40 flex items-center justify-center transition-colors"
-              >
-                <ChevronLeft className="w-5 h-5 text-gold" />
-              </button>
-              <button 
-                onClick={scrollRight}
-                className="w-10 h-10 rounded-full bg-gold/20 hover:bg-gold/40 flex items-center justify-center transition-colors"
-              >
-                <ChevronRight className="w-5 h-5 text-gold" />
-              </button>
+          <h2 className="font-display text-2xl md:text-3xl font-bold mb-8 px-4">
+            You May Also Like
+          </h2>
+          <div className="relative">
+            {/* Left Arrow */}
+            <button 
+              onClick={scrollLeft}
+              className="absolute left-1 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-gold/20 hover:bg-gold/40 flex items-center justify-center transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5 text-gold" />
+            </button>
+            
+            {/* Right Arrow */}
+            <button 
+              onClick={scrollRight}
+              className="absolute right-1 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-gold/20 hover:bg-gold/40 flex items-center justify-center transition-colors"
+            >
+              <ChevronRight className="w-5 h-5 text-gold" />
+            </button>
+
+            <div 
+              ref={scrollContainerRef}
+              className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide pl-[19px] pr-4"
+            >
+              {randomCars.map((randomCar, index) => (
+                <div key={randomCar.id} className="flex-shrink-0 w-[280px]">
+                  <CarCard car={randomCar} index={index} />
+                </div>
+              ))}
             </div>
-          </div>
-          <div 
-            ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide px-4"
-          >
-            {randomCars.map((randomCar, index) => (
-              <div key={randomCar.id} className="flex-shrink-0 w-[280px]">
-                <CarCard car={randomCar} index={index} />
-              </div>
-            ))}
           </div>
         </section>
       </main>
