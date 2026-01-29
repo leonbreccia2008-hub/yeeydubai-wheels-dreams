@@ -1,13 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Check } from 'lucide-react';
+import { ArrowLeft, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ImageGallery } from '@/components/ImageGallery';
 import { CarCard } from '@/components/CarCard';
 import { getCarById, brands, getHorsepower, getDescription, cars } from '@/data/cars';
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useMemo, useRef } from 'react';
 
 const CarDetail = () => {
   const { id } = useParams();
@@ -23,25 +23,20 @@ const CarDetail = () => {
     return shuffled.slice(0, 6);
   }, [id]);
 
-  // Scroll progress tracking
+  // Scroll navigation
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+  };
 
-    const handleScroll = () => {
-      const { scrollLeft, scrollWidth, clientWidth } = container;
-      const maxScroll = scrollWidth - clientWidth;
-      if (maxScroll > 0) {
-        setScrollProgress(scrollLeft / maxScroll);
-      }
-    };
-
-    container.addEventListener('scroll', handleScroll);
-    return () => container.removeEventListener('scroll', handleScroll);
-  }, [randomCars]);
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+  };
   if (!car) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -142,9 +137,25 @@ const CarDetail = () => {
 
         {/* Random Cars Section */}
         <section className="mt-20 -mx-4 px-0">
-          <h2 className="font-display text-2xl md:text-3xl font-bold mb-8 px-4">
-            You May Also Like
-          </h2>
+          <div className="flex items-center justify-between mb-8 px-4">
+            <h2 className="font-display text-2xl md:text-3xl font-bold">
+              You May Also Like
+            </h2>
+            <div className="flex gap-3">
+              <button 
+                onClick={scrollLeft}
+                className="w-10 h-10 rounded-full bg-gold/20 hover:bg-gold/40 flex items-center justify-center transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5 text-gold" />
+              </button>
+              <button 
+                onClick={scrollRight}
+                className="w-10 h-10 rounded-full bg-gold/20 hover:bg-gold/40 flex items-center justify-center transition-colors"
+              >
+                <ChevronRight className="w-5 h-5 text-gold" />
+              </button>
+            </div>
+          </div>
           <div 
             ref={scrollContainerRef}
             className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide px-4"
@@ -154,19 +165,6 @@ const CarDetail = () => {
                 <CarCard car={randomCar} index={index} />
               </div>
             ))}
-          </div>
-          
-          {/* Scroll Progress Indicator */}
-          <div className="mt-4 px-4">
-            <div className="h-1 bg-muted rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-foreground rounded-full transition-all duration-150"
-                style={{ 
-                  width: '30%',
-                  transform: `translateX(${scrollProgress * 233}%)`
-                }}
-              />
-            </div>
           </div>
         </section>
       </main>
