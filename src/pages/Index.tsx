@@ -42,9 +42,7 @@ const Index = () => {
         }} transition={{
           duration: 0.8,
           delay: 0.2
-        }} className="text-xl md:text-2xl text-white/80 mb-10 max-w-2xl mx-auto">
-            Experience the finest supercars and luxury vehicles in the heart of UAE
-          </motion.p>
+        }} className="text-xl md:text-2xl text-white/80 mb-10 max-w-2xl mx-auto">Experience luxury & comfort on every ride</motion.p>
           <motion.div initial={{
           opacity: 0,
           y: 20
@@ -68,8 +66,7 @@ const Index = () => {
       {/* Brands Section */}
       <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12">
-            Our <span className="text-gradient-gold">Premium Brands</span>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12">Choose your car<span className="text-gradient-gold">Premium Brands</span>
           </h2>
           <div className="flex flex-wrap justify-center gap-8 md:gap-12">
             {brands.map((brand, index) => <motion.div key={brand.id} initial={{
