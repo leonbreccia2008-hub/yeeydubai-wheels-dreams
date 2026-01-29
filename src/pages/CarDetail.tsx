@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Check } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -20,23 +20,11 @@ const CarDetail = () => {
   const randomCars = useMemo(() => {
     const otherCars = cars.filter(c => c.id !== id);
     const shuffled = [...otherCars].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 6);
+    return shuffled.slice(0, 4);
   }, [id]);
 
-  // Scroll navigation
+  // Scroll container ref
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-    }
-  };
   if (!car) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -140,33 +128,15 @@ const CarDetail = () => {
           <h2 className="font-display text-2xl md:text-3xl font-bold mb-8 px-4">
             You May Also Like
           </h2>
-          <div className="relative">
-            {/* Left Arrow */}
-            <button 
-              onClick={scrollLeft}
-              className="absolute left-[5px] top-[calc(50%-40px)] -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-gold/20 hover:bg-gold/40 flex items-center justify-center transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5 text-gold" />
-            </button>
-            
-            {/* Right Arrow */}
-            <button 
-              onClick={scrollRight}
-              className="absolute right-[5px] top-[calc(50%-40px)] -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-gold/20 hover:bg-gold/40 flex items-center justify-center transition-colors"
-            >
-              <ChevronRight className="w-5 h-5 text-gold" />
-            </button>
-
-            <div 
-              ref={scrollContainerRef}
-              className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide pl-[21px] pr-4"
-            >
-              {randomCars.map((randomCar, index) => (
-                <div key={randomCar.id} className="flex-shrink-0 w-[280px]">
-                  <CarCard car={randomCar} index={index} />
-                </div>
-              ))}
-            </div>
+          <div 
+            ref={scrollContainerRef}
+            className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide pl-[21px] pr-4"
+          >
+            {randomCars.map((randomCar, index) => (
+              <div key={randomCar.id} className="flex-shrink-0 w-[280px]">
+                <CarCard car={randomCar} index={index} />
+              </div>
+            ))}
           </div>
         </section>
       </main>
