@@ -5,7 +5,9 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ImageGallery } from '@/components/ImageGallery';
-import { getCarById, brands, getHorsepower, getDescription } from '@/data/cars';
+import { CarCard } from '@/components/CarCard';
+import { getCarById, brands, getHorsepower, getDescription, cars } from '@/data/cars';
+import { useMemo } from 'react';
 
 const CarDetail = () => {
   const { id } = useParams();
@@ -14,6 +16,12 @@ const CarDetail = () => {
   const horsepower = car ? getHorsepower(car.model) : 0;
   const description = car ? getDescription(car.model) : '';
 
+  // Get 6 random cars excluding the current one
+  const randomCars = useMemo(() => {
+    const otherCars = cars.filter(c => c.id !== id);
+    const shuffled = [...otherCars].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 6);
+  }, [id]);
   if (!car) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -111,6 +119,20 @@ const CarDetail = () => {
             </motion.div>
           </div>
         </div>
+
+        {/* Random Cars Section */}
+        <section className="mt-20">
+          <h2 className="font-display text-2xl md:text-3xl font-bold mb-8">
+            You May Also Like
+          </h2>
+          <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+            {randomCars.map((randomCar, index) => (
+              <div key={randomCar.id} className="flex-shrink-0 w-[280px]">
+                <CarCard car={randomCar} index={index} />
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
 
       <Footer />
