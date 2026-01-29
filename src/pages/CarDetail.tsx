@@ -52,8 +52,6 @@ const CarDetail = () => {
 
               <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">{car.name}</h1>
               
-              <p className="text-muted-foreground italic text-lg mb-6">{description}</p>
-              
               <div className="flex items-baseline gap-2 mb-8">
                 <span className="text-4xl font-bold text-gradient-gold">
                   {car.pricePerDay.toLocaleString()} AED
@@ -104,6 +102,11 @@ const CarDetail = () => {
                     Book via WhatsApp
                   </a>
                 </Button>
+              </div>
+
+              {/* Description */}
+              <div className="mt-8 pt-6 border-t border-border">
+                <p className="text-muted-foreground italic text-lg leading-relaxed">{description}</p>
               </div>
             </motion.div>
           </div>
